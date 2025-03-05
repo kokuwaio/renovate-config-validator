@@ -24,7 +24,7 @@ steps:
       - echo "$AUTH" > /tmp/auth.json
       - skopeo copy --all --preserve-digests --dest-precompute-digests
           docker://ci-registry.schnabel.org/kokuwaio/renovate-config-validator:$CI_PIPELINE_NUMBER
-          docker://$URL/kokuwaio/renovate-config-validator:39.188.0
+          docker://$URL/kokuwaio/renovate-config-validator:39.188.1
       - skopeo copy --all --preserve-digests --dest-precompute-digests
           docker://ci-registry.schnabel.org/kokuwaio/renovate-config-validator:$CI_PIPELINE_NUMBER
           docker://$URL/kokuwaio/renovate-config-validator:latest
