@@ -31,7 +31,7 @@ steps:
         --label=org.opencontainers.image.source=$CI_REPO_CLONE_URL
         --label=org.opencontainers.image.vendor=kokuwa.io
         --label=org.opencontainers.image.licenses=GPL-3.0-or-later
-        --label=org.opencontainers.image.version=40.11.18
+        --label=org.opencontainers.image.version=40.11.19
 
   test:
     image: ci-registry.schnabel.org/kokuwaio/renovate-config-validator:${CI_PIPELINE_NUMBER}-${PLATFORM}
