@@ -1,4 +1,4 @@
-FROM docker.io/renovate/renovate:40.22.0@sha256:5f0d7548ac50a9e960a8068e6ac96eceaabb5f52f2797ae1584be1af52ebab17
+FROM docker.io/renovate/renovate:40.22.1@sha256:edfc03fd9f93c0d8d7de0e14336bfe834696efe6aa7402c5eb75473589244969
 COPY --link --chown=0:0 --chmod=555 entrypoint.sh /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 USER 1000:1000
