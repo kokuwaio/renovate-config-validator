@@ -1,0 +1,17 @@
+when:
+  instance: ci.kokuwa.io
+  repo: woodpecker/renovate-config-validator
+  event: [manual, push]
+  branch: main
+  path: [.woodpecker/dockerhub.yaml, README.md]
+
+steps:
+
+  metadata:
+    image: kokuwaio/dockerhub-metadata
+    settings:
+      repository: kokuwaio/renovate-config-validator
+      description-short: A WoodpeckerCI plugin for renovate-config-validator to lint renovate files.
+      categories: [developer-tools, integration-and-delivery]
+      username: {from_secret: dockerhub_username}
+      password: {from_secret: dockerhub_password}
