@@ -26,7 +26,7 @@ steps:
         org.opencontainers.image.vendor: kokuwa.io
         org.opencontainers.image.licenses: EUPL-1.2
         org.opencontainers.image.ref.name: kokuwaio/renovate-config-validator
-        org.opencontainers.image.version: 40.61.3
+        org.opencontainers.image.version: 40.62.0
     when:
       event: pull_request
 
@@ -36,13 +36,13 @@ steps:
       <<: *settings
       name:
         - registry.kokuwa.io/kokuwaio/renovate-config-validator:latest
-        - registry.kokuwa.io/kokuwaio/renovate-config-validator:40.61.3
+        - registry.kokuwa.io/kokuwaio/renovate-config-validator:40.62.0
         - registry.kokuwa.io/kokuwaio/renovate-config-validator:40
         - docker.io/kokuwaio/renovate-config-validator:latest
-        - docker.io/kokuwaio/renovate-config-validator:40.61.3
+        - docker.io/kokuwaio/renovate-config-validator:40.62.0
         - docker.io/kokuwaio/renovate-config-validator:40
         - ghcr.io/kokuwaio/renovate-config-validator:latest
-        - ghcr.io/kokuwaio/renovate-config-validator:40.61.3
+        - ghcr.io/kokuwaio/renovate-config-validator:40.62.0
         - ghcr.io/kokuwaio/renovate-config-validator:40
       auth:
         "https://index.docker.io/v1/":
