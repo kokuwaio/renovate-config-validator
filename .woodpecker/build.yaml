@@ -36,7 +36,6 @@ steps:
       <<: *settings
       name:
         - registry.kokuwa.io/kokuwaio/renovate-config-validator:latest
-        - registry.kokuwa.io/kokuwaio/renovate-config-validator:41.13.1
         - registry.kokuwa.io/kokuwaio/renovate-config-validator:40
         - docker.io/kokuwaio/renovate-config-validator:latest
         - docker.io/kokuwaio/renovate-config-validator:41.13.1
