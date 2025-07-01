@@ -36,13 +36,13 @@ steps:
       <<: *settings
       name:
         - registry.kokuwa.io/kokuwaio/renovate-config-validator:latest
-        - registry.kokuwa.io/kokuwaio/renovate-config-validator:40
+        - registry.kokuwa.io/kokuwaio/renovate-config-validator:41
         - docker.io/kokuwaio/renovate-config-validator:latest
         - docker.io/kokuwaio/renovate-config-validator:41.17.2
-        - docker.io/kokuwaio/renovate-config-validator:40
+        - docker.io/kokuwaio/renovate-config-validator:41
         - ghcr.io/kokuwaio/renovate-config-validator:latest
         - ghcr.io/kokuwaio/renovate-config-validator:41.17.2
-        - ghcr.io/kokuwaio/renovate-config-validator:40
+        - ghcr.io/kokuwaio/renovate-config-validator:41
       auth:
         "https://index.docker.io/v1/":
           username: {from_secret: docker_io_username}
