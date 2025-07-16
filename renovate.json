@@ -1,6 +1,6 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["local>kokuwaio/renovate-config", ":reviewer(stephan.schnabel)"]	,
+	"extends": ["kokuwaio/renovate-config"]	,
 	"packageRules": [
 		{
 			"description": "Renovate should only update its major version because of pull policy Always.",
