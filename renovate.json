@@ -1,25 +1,41 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["kokuwaio/renovate-config"]	,
+	"extends": ["kokuwaio/renovate-config"],
 	"packageRules": [
 		{
 			"description": "Renovate should only update its major version because of pull policy Always.",
-			"matchPackageNames": ["docker.io/renovate/renovate"],
+			"matchManagers": ["npm"],
+			"matchPackageNames": ["renovate"],
 			"matchUpdateTypes": ["minor", "patch"],
 			"automerge": true
+		},{
+			"description": "Renovate only supports nodejs 22.",
+			"matchPackageNames": ["nodejs/node"],
+			"matchUpdateTypes": ["major"],
+			"enabled": false
 		}
 	],
 	"customManagers": [
 		{
 			"customType": "regex",
-			"managerFilePatterns": [".woodpecker/build.yaml"],
+			"managerFilePatterns": ["Dockerfile", ".woodpecker/build.yaml"],
 			"matchStrings": [
 				"kokuwaio/renovate-config-validator:(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)",
 				"kokuwaio/renovate-config-validator:(?<currentValue>(?<major>[0-9]+))",
-				"version: (?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)"
+				"version: (?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)",
+				"renovate@(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)"
 			],
-			"datasourceTemplate": "docker",
-			"packageNameTemplate": "docker.io/renovate/renovate"
+			"datasourceTemplate": "npm",
+			"packageNameTemplate": "renovate"
+		},{
+			"customType": "regex",
+			"managerFilePatterns": ["Dockerfile"],
+			"matchStrings": [
+				"nodejs.org/download/release/(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)/",
+				"node-(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)-linux-\\$ARCH"
+			],
+			"datasourceTemplate": "github-releases",
+			"packageNameTemplate": "nodejs/node"
 		}
 	]
 }

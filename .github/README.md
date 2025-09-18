@@ -10,4 +10,4 @@
 A [WoodpeckerCI](https://woodpecker-ci.org) plugin for [Renovate configuration validation](https://docs.renovatebot.com/config-validation/).  
 Also usable with Gitlab, Github or locally, see examples for usage.
 
-For more documention see: [git.kokuwa.io/woodpecker/markdownlint](https://git.kokuwa.io/woodpecker/markdownlint)
+For more documention see: [git.kokuwa.io/woodpecker/renovate-config-validator](https://git.kokuwa.io/woodpecker/renovate-config-validator)
