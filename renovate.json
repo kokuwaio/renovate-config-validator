@@ -9,6 +9,11 @@
 			"matchUpdateTypes": ["minor", "patch"],
 			"automerge": true
 		},{
+			"description": "Renovate generates a lot noise because of multiple releases per day, only rebuild at night.",
+			"matchManagers": ["npm"],
+			"matchPackageNames": ["renovate"],
+			"schedule": ["* 1-5 * * *"]
+		},{
 			"description": "Renovate only supports nodejs 22.",
 			"matchPackageNames": ["nodejs/node"],
 			"matchUpdateTypes": ["major"],
@@ -20,7 +25,6 @@
 			"customType": "regex",
 			"managerFilePatterns": ["Dockerfile", ".woodpecker/build.yaml"],
 			"matchStrings": [
-				"kokuwaio/renovate-config-validator:(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)",
 				"kokuwaio/renovate-config-validator:(?<currentValue>(?<major>[0-9]+))",
 				"version: (?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)",
 				"renovate@(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)"

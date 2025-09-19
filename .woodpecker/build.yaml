@@ -38,10 +38,8 @@ steps:
         - registry.kokuwa.io/kokuwaio/renovate-config-validator:latest
         - registry.kokuwa.io/kokuwaio/renovate-config-validator:41
         - docker.io/kokuwaio/renovate-config-validator:latest
-        - docker.io/kokuwaio/renovate-config-validator:41.119.0
         - docker.io/kokuwaio/renovate-config-validator:41
         - ghcr.io/kokuwaio/renovate-config-validator:latest
-        - ghcr.io/kokuwaio/renovate-config-validator:41.119.0
         - ghcr.io/kokuwaio/renovate-config-validator:41
       auth:
         "https://index.docker.io/v1/":
