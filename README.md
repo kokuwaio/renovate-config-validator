@@ -23,7 +23,7 @@ Woodpecker:
 ```yaml
 steps:
   renovate:
-    image: kokuwaio/renovate-config-validator
+    image: kokuwaio/renovate-config-validator:41
     settings:
       strict: false
     when:
@@ -34,11 +34,13 @@ steps:
 Gitlab:
 
 ```yaml
-kokuwaio/renovate-config-validator:
+renovate:
+  needs: []
   stage: lint
-  image: kokuwaio/renovate-config-validator
-  variables:
-    PLUGIN_STRICT: false
+  image:
+    name: kokuwaio/renovate-config-validator:41
+    entrypoint: [""]
+  script: [renovate-config-validator --strict]
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       changes: [renovate.json]

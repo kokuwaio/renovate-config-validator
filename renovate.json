@@ -21,7 +21,7 @@
 	"customManagers": [
 		{
 			"customType": "regex",
-			"managerFilePatterns": ["Dockerfile", ".woodpecker/build.yaml"],
+			"managerFilePatterns": ["README.md", "Dockerfile", ".woodpecker/build.yaml"],
 			"matchStrings": [
 				"kokuwaio/renovate-config-validator:(?<currentValue>(?<major>[0-9]+))",
 				"version: (?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)",
