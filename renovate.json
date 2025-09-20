@@ -4,13 +4,11 @@
 	"packageRules": [
 		{
 			"description": "Renovate should only update its major version because of pull policy Always.",
-			"matchManagers": ["npm"],
 			"matchPackageNames": ["renovate"],
 			"matchUpdateTypes": ["minor", "patch"],
 			"automerge": true
 		},{
 			"description": "Renovate generates a lot noise because of multiple releases per day, only rebuild at night.",
-			"matchManagers": ["npm"],
 			"matchPackageNames": ["renovate"],
 			"schedule": ["* 1-5 * * *"]
 		},{
