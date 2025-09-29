@@ -23,6 +23,7 @@ Woodpecker:
 ```yaml
 steps:
   renovate:
+    depends_on: []
     image: kokuwaio/renovate-config-validator:41
     settings:
       strict: false
@@ -31,7 +32,7 @@ steps:
       path: renovate.json
 ```
 
-Gitlab:
+Gitlab: (using script is needed because of <https://gitlab.com/gitlab-org/gitlab/-/issues/19717>)
 
 ```yaml
 renovate:
