@@ -2,7 +2,7 @@
 ## Download node and markdownlint
 ##
 
-FROM docker.io/library/debian:13.1-slim@sha256:66b37a5078a77098bfc80175fb5eb881a3196809242fd295b25502854e12cbec AS build
+FROM docker.io/library/debian:13.1-slim@sha256:a347fd7510ee31a84387619a492ad6c8eb0af2f2682b916ff3e643eb076f925a AS build
 SHELL ["/bin/bash", "-u", "-e", "-o", "pipefail", "-c"]
 WORKDIR /build
 # hadolint ignore=DL3008
@@ -53,7 +53,7 @@ RUN --mount=type=cache,target=/tmp PATH="$PATH:/opt/node/bin" npm install "renov
 ## Final stage
 ##
 
-FROM docker.io/library/debian:13.1-slim@sha256:66b37a5078a77098bfc80175fb5eb881a3196809242fd295b25502854e12cbec
+FROM docker.io/library/debian:13.1-slim@sha256:a347fd7510ee31a84387619a492ad6c8eb0af2f2682b916ff3e643eb076f925a
 COPY --chmod=555 --from=build /opt/node/bin/node /opt/node/bin/
 COPY             --from=build /opt/node/lib/node_modules/renovate /opt/node/lib/node_modules/renovate
 COPY --chmod=555 entrypoint.sh /usr/local/bin/entrypoint.sh
