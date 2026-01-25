@@ -46,7 +46,7 @@ RUN --mount=type=cache,target=/build \
 
 ARG NPM_CONFIG_REGISTRY
 RUN --mount=type=cache,target=/tmp PATH="$PATH:/opt/node/bin" npm install "renovate@42.80.3" --global --no-fund --cache=/tmp && \
-	find /opt/node/lib/node_modules/renovate -type f ! -name \*.js -a ! -name \*.cjs -a ! -name \*.mjs -a ! -name \*.wasm.gz -a ! -name \*.wasm -a ! -name package.json -a ! -name vendors.json -a ! -name mappingTable.json -a ! -path '/opt/node/lib/node_modules/renovate/dist/data/*' -delete && \
+	find /opt/node/lib/node_modules/renovate -type f ! -name \*.js -a ! -name \*.cjs -a ! -name \*.mjs -a ! -name \*.wasm.gz -a ! -name \*.wasm -a ! -name package.json -a ! -name vendors.json -a ! -name mappingTable.json -a ! -name builtin-modules.json -a ! -path '/opt/node/lib/node_modules/renovate/dist/data/*' -delete && \
 	find /opt/node/lib/node_modules/renovate -type d -empty -delete
 
 ##
