@@ -24,7 +24,7 @@ Woodpecker:
 steps:
   renovate:
     depends_on: []
-    image: kokuwaio/renovate-config-validator:42
+    image: kokuwaio/renovate-config-validator:43
     settings:
       strict: false
     when:
@@ -39,7 +39,7 @@ renovate:
   needs: []
   stage: lint
   image:
-    name: kokuwaio/renovate-config-validator:42
+    name: kokuwaio/renovate-config-validator:43
     entrypoint: [""]
   script: [renovate-config-validator --strict]
   rules:
