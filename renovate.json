@@ -12,7 +12,7 @@
 			"matchPackageNames": ["renovate"],
 			"schedule": ["* 1-5 * * *"]
 		},{
-			"description": "Renovate only supports nodejs 22.",
+			"description": "Renovate only supports nodejs 24.",
 			"matchPackageNames": ["nodejs/node"],
 			"matchUpdateTypes": ["major"],
 			"enabled": false
