@@ -53,10 +53,10 @@ RUN --mount=type=cache,target=/tmp PATH="$PATH:/opt/node/bin" npm install "renov
 ## Final stage
 ##
 
-FROM docker.io/library/debian:13.4-slim@sha256:cedb1ef40439206b673ee8b33a46a03a0c9fa90bf3732f54704f99cb061d2c5a
-COPY --chmod=555 --from=build /opt/node/bin/node /opt/node/bin/
-COPY             --from=build /opt/node/lib/node_modules/renovate /opt/node/lib/node_modules/renovate
-COPY --chmod=555 entrypoint.sh /usr/local/bin/entrypoint.sh
+FROM docker.io/library/debian:13.4-slim@sha256:cedb1ef40439206b673ee8b33a46a03a0c9fa90bf3732f54704f99cb061d2c5a AS renovate-config-validator
+COPY --link --chmod=555 --from=build /opt/node/bin/node /opt/node/bin/
+COPY --link             --from=build /opt/node/lib/node_modules/renovate /opt/node/lib/node_modules/renovate
+COPY --link --chmod=555 entrypoint.sh /usr/local/bin/entrypoint.sh
 ENV PATH="$PATH:/opt/node/bin"
 RUN ln -s /opt/node/lib/node_modules/renovate/dist/config-validator.js /opt/node/bin/renovate-config-validator && renovate-config-validator
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

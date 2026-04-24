@@ -41,7 +41,7 @@ renovate:
   image:
     name: kokuwaio/renovate-config-validator:43
     entrypoint: [""]
-  script: [renovate-config-validator --strict]
+  script: /usr/local/bin/entrypoint.sh
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       changes: [renovate.json]
@@ -50,19 +50,21 @@ renovate:
 CLI:
 
 ```bash
-docker run --rm --volume=$(pwd):$(pwd):ro --workdir=$(pwd) kokuwaio/renovate-config-validator
+docker run --rm --volume=$PWD:$PWD:ro --workdir=$PWD kokuwaio/renovate-config-validator:43
 ```
 
 ## Settings
 
-| Settings Name                                                         | Environment   | Default | Description                               |
-| --------------------------------------------------------------------- | ------------- | ------- | ----------------------------------------- |
-| [strict](https://docs.renovatebot.com/config-validation/#strict-mode) | PLUGIN_STRICT | `true`  | Fail if a scanned config needs migration. |
+| Settings Name                                                         | Environment          | Default | Description                                                                                                                     |
+| --------------------------------------------------------------------- | -------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| files                                                                 | PLUGIN_FILE          | `[]`    | Files to validate, if empty scan for [common names](https://docs.renovatebot.com/configuration-options/#configuration-options). |
+| [strict](https://docs.renovatebot.com/config-validation/#strict-mode) | PLUGIN_STRICT        | `true`  | Fail if a scanned config needs migration.                                                                                       |
+| validate-json                                                         | PLUGIN_VALIDATE_JSON | `true`  | Fail if not valid json but json5.                                                                                               |
 
 ## Alternatives
 
 | Image                                                                                                       | Comment                           |                                                                                      amd64                                                                                      |                                                                                      arm64                                                                                      |
 | ----------------------------------------------------------------------------------------------------------- | --------------------------------- | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| [kokuwaio/renovate-config-validator](https://hub.docker.com/r/kokuwaio/renovate-config-validator)           | Woodpecker plugin                 | [![size](https://img.shields.io/docker/image-size/kokuwaio/renovate-config-validator?arch=amd64&label=)](https://hub.docker.com/r/kokuwaio/renovate-config-validator)           | [![size](https://img.shields.io/docker/image-size/kokuwaio/renovate-config-validator?arch=arm64&label=)](https://hub.docker.com/r/kokuwaio/renovate-config-validator)           |
-| [renovate/renovate](https://hub.docker.com/r/renovate/renovate)                                             | not a Woodpecker plugin, official | [![size](https://img.shields.io/docker/image-size/renovate/renovate/latest?arch=amd64&label=)](https://hub.docker.com/r/renovate/renovate)                                      | [![size](https://img.shields.io/docker/image-size/renovate/renovate/latest?arch=arm64&label=)](https://hub.docker.com/r/renovate/renovate)                                      |
+| [kokuwaio/renovate-config-validator](https://hub.docker.com/r/kokuwaio/renovate-config-validator)           | Woodpecker plugin                 |      [![size](https://img.shields.io/docker/image-size/kokuwaio/renovate-config-validator?arch=amd64&label=)](https://hub.docker.com/r/kokuwaio/renovate-config-validator)      |      [![size](https://img.shields.io/docker/image-size/kokuwaio/renovate-config-validator?arch=arm64&label=)](https://hub.docker.com/r/kokuwaio/renovate-config-validator)      |
+| [renovate/renovate](https://hub.docker.com/r/renovate/renovate)                                             | not a Woodpecker plugin, official |                   [![size](https://img.shields.io/docker/image-size/renovate/renovate/latest?arch=amd64&label=)](https://hub.docker.com/r/renovate/renovate)                    |                   [![size](https://img.shields.io/docker/image-size/renovate/renovate/latest?arch=arm64&label=)](https://hub.docker.com/r/renovate/renovate)                    |
 | [rwslinkman/renovatebot-config-validator](https://hub.docker.com/r/rwslinkman/renovatebot-config-validator) | not a Woodpecker plugin, outdated | [![size](https://img.shields.io/docker/image-size/rwslinkman/renovatebot-config-validator?arch=amd64&label=)](https://hub.docker.com/r/rwslinkman/renovatebot-config-validator) | [![size](https://img.shields.io/docker/image-size/rwslinkman/renovatebot-config-validator?arch=arm64&label=)](https://hub.docker.com/r/rwslinkman/renovatebot-config-validator) |

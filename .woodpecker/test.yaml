@@ -13,10 +13,20 @@ labels:
 
 steps:
 
-  pr:
+  pr-valid-repo: &pr
     image: registry.kokuwa.io/kokuwaio/renovate-config-validator:ci-${CI_PIPELINE_NUMBER}
+    depends_on: []
     when:
       event: pull_request
+  pr-valid-multiple: {<<: *pr, settings: {files: [renovate.json, test/valid.json, test/valid.json5]}}
+  pr-valid-json: {<<: *pr, settings: {files: test/valid.json}}
+  pr-valid-json5: {<<: *pr, settings: {files: test/valid.json5}}
+  pr-valid-ignore-json5: {<<: *pr, settings: {files: test/invalid-json5.json, validate-json: false}}
+  pr-invalid-garbage: {<<: *pr, settings: {files: test/invalid-garbage.json}, failure: ignore}
+  pr-invalid-json5: {<<: *pr, settings: {files: test/invalid-json5.json}, failure: ignore}
+  pr-invalid-multiple: {<<: *pr, settings: {files: [renovate.json, test/valid.json, test/invalid-garbage.json, test/valid.json5, test/invalid-json5.json]}, failure: ignore}
+  pr-notfound-file: {<<: *pr, settings: {files: test/notfound.json}, failure: ignore}
+  pr-notfound-dir: {<<: *pr, directory: /tmp, failure: ignore}
 
   kokuwa.io: &version
     image: registry.kokuwa.io/kokuwaio/renovate-config-validator
