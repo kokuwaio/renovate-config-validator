@@ -7,11 +7,15 @@
 			"matchPackageNames": ["renovate"],
 			"matchUpdateTypes": ["minor", "patch"],
 			"automerge": true
-		},{
+		},
+		{
 			"description": "Renovate generates a lot noise because of multiple releases per day, only rebuild at night.",
 			"matchPackageNames": ["renovate"],
-			"schedule": ["* 1-5 * * *"]
-		},{
+			"separateMinorPatch": false,
+			"separateMultipleMinor": false,
+			"schedule": ["* 1 * * *"]
+		},
+		{
 			"description": "Renovate only supports nodejs 24.",
 			"matchPackageNames": ["nodejs/node"],
 			"matchUpdateTypes": ["major"],
@@ -29,7 +33,8 @@
 			],
 			"datasourceTemplate": "npm",
 			"packageNameTemplate": "renovate"
-		},{
+		},
+		{
 			"customType": "regex",
 			"managerFilePatterns": ["Dockerfile"],
 			"matchStrings": [
