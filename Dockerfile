@@ -62,3 +62,6 @@ ENV PATH="$PATH:/opt/node/bin"
 RUN ln -s /opt/node/lib/node_modules/renovate/dist/config-validator.js /opt/node/bin/renovate-config-validator && renovate-config-validator
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 USER 1000:1000
+
+# https://github.com/renovatebot/renovate/discussions/39740#discussioncomment-15159853
+ENV RENOVATE_X_IGNORE_RE2=true
