@@ -16,7 +16,7 @@
 			"schedule": ["* 1 * * *"]
 		},
 		{
-			"description": "Renovate only supports nodejs 24.",
+			"description": "Renovate only supports nodejs 26.",
 			"matchPackageNames": ["nodejs/node"],
 			"matchUpdateTypes": ["major"],
 			"enabled": false

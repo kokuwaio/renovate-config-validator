@@ -1,15 +1,29 @@
+# hadolint global ignore=DL3008 # Pin versions in apt get install.
+# hadolint global ignore=SC3010 # In POSIX sh, [[ ]] is undefined.
+
+FROM docker.io/library/debian:13.8-slim@sha256:8aa5a7bf5a1955bddbe7d74fcdd0b91ab30e74362a8b73af672b0481b35b44a0 AS base
+SHELL ["/usr/bin/bash", "-u", "-e", "-o", "pipefail", "-c"]
+ARG DEBIAN_FRONTEND=noninteractive
+# https://github.com/nodejs/node/issues/60790
+RUN --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    --mount=type=tmpfs,target=/var/cache \
+    --mount=type=tmpfs,target=/var/log \
+	apt-get -qq update && \
+	apt-get -qq install --yes --no-install-recommends libatomic1 && \
+	rm -rf /var/lib/dpkg/*-old
+
 ##
-## Download node and markdownlint
+## Download node and renovate
 ##
 
-FROM docker.io/library/debian:13.8-slim@sha256:8aa5a7bf5a1955bddbe7d74fcdd0b91ab30e74362a8b73af672b0481b35b44a0 AS build
-SHELL ["/bin/bash", "-u", "-e", "-o", "pipefail", "-c"]
+FROM base AS build
 WORKDIR /build
-# hadolint ignore=DL3008
-RUN --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+RUN --mount=type=cache,target=/var/lib/apt/lists \
+    --mount=type=tmpfs,target=/var/cache \
+    --mount=type=tmpfs,target=/var/log \
 	apt-get -qq update && \
 	apt-get -qq install --yes --no-install-recommends ca-certificates wget gpg gpg-agent dirmngr xz-utils && \
-	rm -rf /etc/*- /var/lib/dpkg/*-old /var/lib/dpkg/status /var/cache/* /var/log/*
+	rm -rf /var/lib/dpkg/*-old
 
 # fetch gpg keys for verification
 # https://github.com/nodejs/node?tab=readme-ov-file#release-keys
@@ -29,19 +43,18 @@ RUN gpg --keyserver=hkps://keyserver.ubuntu.com --recv-keys \
 # https://endoflife.date/nodejs
 
 ARG TARGETARCH
-# hadolint ignore=SC3010
 RUN --mount=type=cache,target=/build,id=nodejs \
 	[[ $TARGETARCH == amd64 ]] && export ARCH=x64; \
 	[[ $TARGETARCH == arm64 ]] && export ARCH=arm64; \
 	[[ -z ${ARCH:-} ]] && echo "Unknown arch: $TARGETARCH" && exit 1; \
 	wget --no-hsts --quiet \
-		"https://nodejs.org/download/release/v24.22.3/node-v24.22.3-linux-$ARCH.tar.xz" \
-		"https://nodejs.org/download/release/v24.22.3/SHASUMS256.txt" \
-		"https://nodejs.org/download/release/v24.22.3/SHASUMS256.txt.sig" && \
+		"https://nodejs.org/download/release/v26.13.1/node-v26.13.1-linux-$ARCH.tar.xz" \
+		"https://nodejs.org/download/release/v26.13.1/SHASUMS256.txt" \
+		"https://nodejs.org/download/release/v26.13.1/SHASUMS256.txt.sig" && \
 	sha256sum --quiet --check --strict --ignore-missing SHASUMS256.txt && \
 	gpg --verify SHASUMS256.txt.sig SHASUMS256.txt && \
-	tar --xz --extract --file="node-v24.22.3-linux-$ARCH.tar.xz" --exclude=bin/npx --exclude=bin/corepack --exclude=lib/node_modules/corepack --exclude=include --exclude=share --no-same-owner && \
-	mv "node-v24.22.3-linux-$ARCH" /opt/node && \
+	tar --xz --extract --file="node-v26.13.1-linux-$ARCH.tar.xz" --exclude=bin/npx --exclude=bin/corepack --exclude=lib/node_modules/corepack --exclude=include --exclude=share --no-same-owner && \
+	mv "node-v26.13.1-linux-$ARCH" /opt/node && \
 	find /opt/node -type f ! -name node -a ! -name npm -a ! -name \*.js -a ! -name \*.cjs -a ! -name package.json -a ! -name vendors.json -a ! -name builtin-modules.json -delete && \
 	find /opt/node -type d -empty -delete
 
@@ -54,14 +67,13 @@ RUN --mount=type=cache,target=/tmp PATH="$PATH:/opt/node/bin" npm install "renov
 ## Final stage
 ##
 
-FROM docker.io/library/debian:13.8-slim@sha256:8aa5a7bf5a1955bddbe7d74fcdd0b91ab30e74362a8b73af672b0481b35b44a0 AS renovate-config-validator
+FROM base AS renovate-config-validator
 COPY --link --chmod=555 --from=build /opt/node/bin/node /opt/node/bin/
 COPY --link             --from=build /opt/node/lib/node_modules/renovate /opt/node/lib/node_modules/renovate
 COPY --link --chmod=555 entrypoint.sh /usr/local/bin/entrypoint.sh
 ENV PATH="$PATH:/opt/node/bin"
+# https://github.com/renovatebot/renovate/discussions/39740#discussioncomment-15159853
+ENV RENOVATE_X_IGNORE_RE2=true
 RUN ln -s /opt/node/lib/node_modules/renovate/dist/config-validator.js /opt/node/bin/renovate-config-validator && renovate-config-validator
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 USER 1000:1000
-
-# https://github.com/renovatebot/renovate/discussions/39740#discussioncomment-15159853
-ENV RENOVATE_X_IGNORE_RE2=true
