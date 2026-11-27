@@ -24,7 +24,7 @@ Woodpecker:
 steps:
   renovate:
     depends_on: []
-    image: kokuwaio/renovate-config-validator:44
+    image: kokuwaio/renovate-config-validator:45
     settings:
       strict: false
     when:
@@ -39,7 +39,7 @@ renovate:
   needs: []
   stage: lint
   image:
-    name: kokuwaio/renovate-config-validator:44
+    name: kokuwaio/renovate-config-validator:45
     entrypoint: [""]
   script: /usr/local/bin/entrypoint.sh
   rules:
@@ -50,7 +50,7 @@ renovate:
 CLI:
 
 ```bash
-docker run --rm --volume=$PWD:$PWD:ro --workdir=$PWD kokuwaio/renovate-config-validator:44
+docker run --rm --volume=$PWD:$PWD:ro --workdir=$PWD kokuwaio/renovate-config-validator:45
 ```
 
 ## Settings
